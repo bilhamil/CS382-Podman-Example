@@ -25,6 +25,12 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     volumes: 
       database_volume:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping').ok", "--quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
 
 volumes:
   database_volume:
